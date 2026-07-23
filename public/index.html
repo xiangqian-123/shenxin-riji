@@ -358,6 +358,10 @@
     <h2>📔 身心日记</h2>
     <p class="sub">每个人的颈椎问题都不一样。<br>跟它聊聊你的情况，帮你搞清楚自己到底怎么回事。</p>
 
+    <div style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;line-height:1.6;font-style:italic;" id="inviteQuote">
+      💭 身体是最诚实的日记本，你只需要学会阅读它。
+    </div>
+
     <!-- 对话预览 -->
     <div class="chat-preview">
       <div class="preview-msg user">
@@ -374,12 +378,6 @@
       </div>
     </div>
 
-    <div style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;line-height:1.6;text-align:left;background:var(--bg);border-radius:10px;padding:10px 14px;">
-      📋 <b>内测说明</b><br>
-      · 共50轮对话，3天内有效<br>
-      · 每条消息限500字<br>
-      · 仅聊颈椎/身体相关话题
-    </div>
     <input type="text" id="inviteCodeInput" placeholder="输入内测邀请码" maxlength="20" autocomplete="off">
     <div class="error-msg" id="inviteError"></div>
     <button id="inviteBtn" onclick="verifyCode()">开始体验</button>
@@ -468,6 +466,7 @@ function init() {
   }
 
   document.getElementById('dailyQuote').textContent = '💭 ' + randomQuote();
+  document.getElementById('inviteQuote').innerHTML = '💭 ' + randomQuote();
   document.getElementById('messageInput').focus();
 }
 
