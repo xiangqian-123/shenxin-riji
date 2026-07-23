@@ -52,22 +52,64 @@
   .invite-card {
     background: var(--card);
     border-radius: 20px;
-    padding: 28px 24px;
+    padding: 24px 20px;
     width: 100%;
-    max-width: 360px;
+    max-width: 380px;
     text-align: center;
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   }
 
-  .invite-card h2 {
-    font-size: 20px;
-    margin-bottom: 6px;
+  .invite-card h2 { font-size: 20px; margin-bottom: 4px; }
+  .invite-card .sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+
+  /* 对话预览 */
+  .chat-preview {
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 16px;
+    text-align: left;
   }
 
-  .invite-card .sub {
+  .chat-preview .preview-msg {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
     font-size: 13px;
+  }
+
+  .chat-preview .preview-msg:last-child { margin-bottom: 0; }
+
+  .chat-preview .preview-msg.user { justify-content: flex-end; }
+
+  .chat-preview .preview-bubble {
+    max-width: 80%;
+    padding: 8px 12px;
+    border-radius: 14px;
+    line-height: 1.5;
+  }
+
+  .chat-preview .preview-msg.user .preview-bubble {
+    background: #ede4d8;
+    border-top-right-radius: 4px;
+    color: var(--text);
+  }
+
+  .chat-preview .preview-msg.ai .preview-bubble {
+    background: #fff;
+    border: 1px solid #e0d5c5;
+    border-top-left-radius: 4px;
+    color: var(--text);
+  }
+
+  .chat-preview .preview-dot {
+    animation: previewFade 2s infinite;
     color: var(--text-secondary);
-    margin-bottom: 20px;
+  }
+
+  @keyframes previewFade {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
   }
 
   .invite-card input {
@@ -85,33 +127,20 @@
     letter-spacing: 2px;
   }
 
-  .invite-card input:focus {
-    border-color: var(--primary);
-  }
+  .invite-card input:focus { border-color: var(--primary); }
 
   .invite-card .error-msg {
-    font-size: 12px;
-    color: var(--danger);
-    margin-bottom: 8px;
-    min-height: 18px;
+    font-size: 12px; color: var(--danger);
+    margin-bottom: 8px; min-height: 18px;
   }
 
   .invite-card button {
-    width: 100%;
-    border: none;
-    border-radius: 12px;
-    padding: 12px;
-    font-size: 15px;
-    cursor: pointer;
-    font-weight: 600;
-    background: var(--primary);
-    color: white;
+    width: 100%; border: none; border-radius: 12px;
+    padding: 12px; font-size: 15px; cursor: pointer;
+    font-weight: 600; background: var(--primary); color: white;
   }
 
-  .invite-card button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  .invite-card button:disabled { opacity: 0.5; cursor: not-allowed; }
 
   /* ===== 每日金句 ===== */
   .daily-quote {
@@ -324,11 +353,28 @@
 <!-- 邀请码遮罩 -->
 <div class="invite-overlay" id="inviteOverlay">
   <div class="invite-card">
-    <h2>📔 身心日记 · 内测</h2>
-    <p class="sub">输入邀请码开始体验</p>
-    <input type="text" id="inviteCodeInput" placeholder="请输入邀请码" maxlength="20" autocomplete="off">
+    <h2>📔 身心日记</h2>
+    <p class="sub">每天聊几句，看清自己的身体规律</p>
+
+    <!-- 对话预览 -->
+    <div class="chat-preview">
+      <div class="preview-msg user">
+        <div class="preview-bubble">今天脖子有点酸，下午开会后右边不舒服</div>
+      </div>
+      <div class="preview-msg ai">
+        <div class="preview-bubble">右边脖子和肩膀连接处，下午开会后——这是久坐+耸肩的典型表现。你试过开完会站起来活动30秒吗？</div>
+      </div>
+      <div class="preview-msg user">
+        <div class="preview-bubble">试了，确实好一点</div>
+      </div>
+      <div class="preview-msg ai">
+        <div class="preview-bubble">你注意到吗——你自己验证了一个有效方法。把这件事记下来，它比任何博主推荐都靠谱。<span class="preview-dot">●</span></div>
+      </div>
+    </div>
+
+    <input type="text" id="inviteCodeInput" placeholder="输入内测邀请码" maxlength="20" autocomplete="off">
     <div class="error-msg" id="inviteError"></div>
-    <button id="inviteBtn" onclick="verifyCode()">开始使用</button>
+    <button id="inviteBtn" onclick="verifyCode()">开始体验</button>
   </div>
 </div>
 
