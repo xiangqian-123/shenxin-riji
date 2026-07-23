@@ -10,5 +10,5 @@
     "SHENXIN008": { "maxUses": 1, "usedBy": [] },
     "BETA2024":   { "maxUses": 3, "usedBy": [] }
   },
-  "messageLimit": 100
+  "messageLimit": 50
 }

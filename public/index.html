@@ -333,6 +333,8 @@
 
   .input-area .send-btn:active { opacity: 0.8; }
   .input-area .send-btn:disabled { background: var(--border); cursor: not-allowed; }
+  .char-count { font-size: 10px; color: var(--text-secondary); text-align: right; padding: 0 4px; }
+  .char-count.over { color: var(--danger); }
 
   /* 错误提示 */
   .error-toast {
@@ -354,7 +356,7 @@
 <div class="invite-overlay" id="inviteOverlay">
   <div class="invite-card">
     <h2>📔 身心日记</h2>
-    <p class="sub">每天聊几句，看清自己的身体规律</p>
+    <p class="sub">每个人的颈椎问题都不一样。<br>跟它聊聊你的情况，帮你搞清楚自己到底怎么回事。</p>
 
     <!-- 对话预览 -->
     <div class="chat-preview">
@@ -372,6 +374,12 @@
       </div>
     </div>
 
+    <div style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;line-height:1.6;text-align:left;background:var(--bg);border-radius:10px;padding:10px 14px;">
+      📋 <b>内测说明</b><br>
+      · 共50轮对话，3天内有效<br>
+      · 每条消息限500字<br>
+      · 仅聊颈椎/身体相关话题
+    </div>
     <input type="text" id="inviteCodeInput" placeholder="输入内测邀请码" maxlength="20" autocomplete="off">
     <div class="error-msg" id="inviteError"></div>
     <button id="inviteBtn" onclick="verifyCode()">开始体验</button>
@@ -383,7 +391,7 @@
   <div class="header-avatar">📔</div>
   <div class="header-info">
     <div class="header-name">身心日记</div>
-    <div class="header-desc">每天聊几句 · 看清自己的身体规律</div>
+    <div class="header-desc">聊聊你的情况 · 搞清楚自己的问题</div>
   </div>
   <span class="header-badge">内测</span>
   <span class="header-limit" id="headerLimit" style="display:none"></span>
@@ -419,8 +427,9 @@
 <!-- 输入区域 -->
 <div class="input-area">
   <textarea id="messageInput" rows="1" placeholder="说说今天的身体感受…"
-            onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+            onkeydown="handleKey(event)" oninput="autoResize(this);updateCharCount(this)"></textarea>
   <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>↑</button>
+  <div class="char-count" id="charCount" style="display:none"></div>
 </div>
 
 <script>
@@ -672,6 +681,19 @@ const QUOTES = [
 ];
 
 function randomQuote() { return QUOTES[Math.floor(Math.random() * QUOTES.length)]; }
+
+function updateCharCount(el) {
+  const count = el.value.length;
+  const cc = document.getElementById('charCount');
+  if (count > 0) {
+    cc.style.display = '';
+    cc.textContent = count + '/500';
+    cc.className = count > 500 ? 'char-count over' : 'char-count';
+    document.getElementById('sendBtn').disabled = count > 500 || !el.value.trim();
+  } else {
+    cc.style.display = 'none';
+  }
+}
 
 function showError(msg) {
   const toast = document.getElementById('errorToast');

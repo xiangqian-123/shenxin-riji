@@ -16,6 +16,7 @@ const API_BASE = process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com/v1';
 const MODEL = 'deepseek-reasoner';
 const DATA_DIR = path.join(__dirname, 'data');
 const INVITE_FILE = path.join(__dirname, 'invite-codes.json');
+const MAX_MESSAGE_LENGTH = 500; // 单次消息最长500字
 
 // 确保数据目录存在
 if (!fs.existsSync(DATA_DIR)) {
@@ -267,6 +268,15 @@ app.post('/api/chat', async (req, res) => {
 
   if (!userId || !message) {
     return res.status(400).json({ error: '缺少 userId 或 message' });
+  }
+
+  // 单次消息长度限制
+  if (message.length > MAX_MESSAGE_LENGTH) {
+    return res.json({
+      reply: `每次对话最长${MAX_MESSAGE_LENGTH}个字哦。你刚才发了${message.length}个字，精简一下再发吧。`,
+      remaining: 0,
+      limit: 0,
+    });
   }
 
   // 加载用户
