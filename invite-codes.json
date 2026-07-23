@@ -1,0 +1,14 @@
+{
+  "codes": {
+    "SHENXIN001": { "maxUses": 1, "usedBy": [] },
+    "SHENXIN002": { "maxUses": 1, "usedBy": [] },
+    "SHENXIN003": { "maxUses": 1, "usedBy": [] },
+    "SHENXIN004": { "maxUses": 1, "usedBy": [] },
+    "SHENXIN005": { "maxUses": 1, "usedBy": [] },
+    "SHENXIN006": { "maxUses": 1, "usedBy": [] },
+    "SHENXIN007": { "maxUses": 1, "usedBy": [] },
+    "SHENXIN008": { "maxUses": 1, "usedBy": [] },
+    "BETA2024":   { "maxUses": 3, "usedBy": [] }
+  },
+  "messageLimit": 100
+}

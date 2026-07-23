@@ -33,6 +33,86 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* ===== 邀请码遮罩 ===== */
+  .invite-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .invite-overlay.hidden {
+    display: none;
+  }
+
+  .invite-card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 28px 24px;
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .invite-card h2 {
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+
+  .invite-card .sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+
+  .invite-card input {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: inherit;
+    margin-bottom: 10px;
+    outline: none;
+    background: var(--bg);
+    color: var(--text);
+    text-align: center;
+    letter-spacing: 2px;
+  }
+
+  .invite-card input:focus {
+    border-color: var(--primary);
+  }
+
+  .invite-card .error-msg {
+    font-size: 12px;
+    color: var(--danger);
+    margin-bottom: 8px;
+    min-height: 18px;
+  }
+
+  .invite-card button {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    background: var(--primary);
+    color: white;
+  }
+
+  .invite-card button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   /* ===== 每日金句 ===== */
   .daily-quote {
     background: linear-gradient(135deg, #faf7f2, #f0e8da);
@@ -43,7 +123,6 @@
     font-style: italic;
     letter-spacing: 0.5px;
     border-bottom: 1px solid var(--border);
-    transition: opacity 0.5s;
   }
 
   /* ===== 顶部栏 ===== */
@@ -72,10 +151,7 @@
     flex-shrink: 0;
   }
 
-  .header-info {
-    flex: 1;
-    min-width: 0;
-  }
+  .header-info { flex: 1; min-width: 0; }
 
   .header-name {
     font-size: 16px;
@@ -98,6 +174,20 @@
     white-space: nowrap;
   }
 
+  .header-limit {
+    font-size: 10px;
+    color: var(--text-secondary);
+    background: var(--bg);
+    padding: 3px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  .header-limit.low {
+    color: var(--danger);
+    background: #fff0f0;
+  }
+
   /* ===== 聊天区域 ===== */
   .chat-area {
     flex: 1;
@@ -109,7 +199,6 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* 欢迎卡片 */
   .welcome-card {
     background: var(--card);
     border-radius: 16px;
@@ -118,18 +207,8 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
-  .welcome-card h2 {
-    font-size: 18px;
-    margin-bottom: 8px;
-    color: var(--text);
-  }
-
-  .welcome-card p {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 6px;
-  }
+  .welcome-card h2 { font-size: 18px; margin-bottom: 8px; color: var(--text); }
+  .welcome-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
 
   .welcome-quick {
     display: flex;
@@ -150,96 +229,45 @@
     white-space: nowrap;
   }
 
-  .welcome-quick button:active {
-    background: var(--primary-light);
-    border-color: var(--primary);
-  }
+  .welcome-quick button:active { background: var(--primary-light); border-color: var(--primary); }
 
   /* 消息气泡 */
-  .message {
-    display: flex;
-    gap: 8px;
-    max-width: 90%;
-    animation: fadeIn 0.3s ease;
-  }
+  .message { display: flex; gap: 8px; max-width: 90%; animation: fadeIn 0.3s ease; }
 
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .message.user {
-    align-self: flex-end;
-    flex-direction: row-reverse;
-  }
+  .message.user { align-self: flex-end; flex-direction: row-reverse; }
 
   .message .avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-    margin-top: 2px;
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0; margin-top: 2px;
   }
 
-  .message.ai .avatar {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    color: white;
-  }
-
-  .message.user .avatar {
-    background: var(--border);
-    color: var(--text-secondary);
-  }
+  .message.ai .avatar { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; }
+  .message.user .avatar { background: var(--border); color: var(--text-secondary); }
 
   .message .bubble {
-    padding: 10px 14px;
-    border-radius: 16px;
-    font-size: 14px;
-    line-height: 1.6;
-    word-break: break-word;
+    padding: 10px 14px; border-radius: 16px;
+    font-size: 14px; line-height: 1.6; word-break: break-word;
   }
 
-  .message.ai .bubble {
-    background: var(--bubble-ai);
-    border: 1px solid var(--border);
-    border-top-left-radius: 4px;
-  }
+  .message.ai .bubble { background: var(--bubble-ai); border: 1px solid var(--border); border-top-left-radius: 4px; }
+  .message.user .bubble { background: var(--bubble-user); border-top-right-radius: 4px; }
 
-  .message.user .bubble {
-    background: var(--bubble-user);
-    border-top-right-radius: 4px;
-  }
-
-  .message .time {
-    font-size: 10px;
-    color: var(--text-secondary);
-    margin-top: 4px;
-    text-align: right;
-  }
-
-  .message.user .time {
-    text-align: left;
-  }
+  .message .time { font-size: 10px; color: var(--text-secondary); margin-top: 4px; text-align: right; }
+  .message.user .time { text-align: left; }
 
   /* 打字指示器 */
-  .typing-indicator {
-    display: flex;
-    gap: 4px;
-    padding: 12px 14px;
-  }
-
+  .typing-indicator { display: flex; gap: 4px; padding: 12px 14px; }
   .typing-indicator span {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
+    width: 6px; height: 6px; border-radius: 50%;
     background: var(--text-secondary);
     animation: bounce 1.4s infinite ease-in-out;
   }
-
   .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
   .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
 
@@ -254,172 +282,55 @@
     border-top: 1px solid var(--border);
     padding: 10px 12px;
     padding-bottom: max(10px, env(safe-area-inset-bottom));
-    display: flex;
-    gap: 8px;
-    align-items: flex-end;
-    position: sticky;
-    bottom: 0;
+    display: flex; gap: 8px; align-items: flex-end;
+    position: sticky; bottom: 0;
   }
 
   .input-area textarea {
-    flex: 1;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 10px 16px;
-    font-size: 14px;
-    font-family: inherit;
-    resize: none;
-    max-height: 100px;
-    outline: none;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.4;
+    flex: 1; border: 1px solid var(--border); border-radius: 20px;
+    padding: 10px 16px; font-size: 14px; font-family: inherit;
+    resize: none; max-height: 100px; outline: none;
+    background: var(--bg); color: var(--text); line-height: 1.4;
   }
 
-  .input-area textarea:focus {
-    border-color: var(--primary);
-  }
+  .input-area textarea:focus { border-color: var(--primary); }
 
   .input-area .send-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: var(--primary);
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: opacity 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: none; background: var(--primary); color: white;
+    font-size: 18px; cursor: pointer; flex-shrink: 0;
+    transition: opacity 0.2s; display: flex; align-items: center; justify-content: center;
   }
 
-  .input-area .send-btn:active {
-    opacity: 0.8;
-  }
+  .input-area .send-btn:active { opacity: 0.8; }
+  .input-area .send-btn:disabled { background: var(--border); cursor: not-allowed; }
 
-  .input-area .send-btn:disabled {
-    background: var(--border);
-    cursor: not-allowed;
-  }
-
-  /* ===== 错误提示 ===== */
+  /* 错误提示 */
   .error-toast {
-    position: fixed;
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #fff0f0;
-    border: 1px solid var(--danger);
-    color: var(--danger);
-    padding: 8px 16px;
-    border-radius: 12px;
-    font-size: 13px;
-    z-index: 100;
-    opacity: 0;
-    transition: opacity 0.3s;
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%);
+    background: #fff0f0; border: 1px solid var(--danger); color: var(--danger);
+    padding: 8px 16px; border-radius: 12px; font-size: 13px;
+    z-index: 100; opacity: 0; transition: opacity 0.3s;
   }
+  .error-toast.show { opacity: 1; }
 
-  .error-toast.show {
-    opacity: 1;
-  }
-
-  /* ===== 设置面板 ===== */
-  .settings-btn {
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 4px;
-    color: var(--text-secondary);
-  }
-
-  .settings-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.3);
-    z-index: 50;
-    display: none;
-    align-items: flex-end;
-  }
-
-  .settings-overlay.show {
-    display: flex;
-  }
-
-  .settings-panel {
-    background: var(--card);
-    width: 100%;
-    border-radius: 20px 20px 0 0;
-    padding: 20px;
-    padding-bottom: max(20px, env(safe-area-inset-bottom));
-  }
-
-  .settings-panel h3 {
-    font-size: 16px;
-    margin-bottom: 16px;
-  }
-
-  .settings-panel label {
-    font-size: 13px;
-    color: var(--text-secondary);
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .settings-panel input {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-size: 14px;
-    font-family: inherit;
-    margin-bottom: 12px;
-    outline: none;
-    background: var(--bg);
-    color: var(--text);
-  }
-
-  .settings-panel .btn-row {
-    display: flex;
-    gap: 8px;
-  }
-
-  .settings-panel button {
-    flex: 1;
-    border: none;
-    border-radius: 12px;
-    padding: 12px;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: 500;
-  }
-
-  .settings-panel .btn-primary {
-    background: var(--primary);
-    color: white;
-  }
-
-  .settings-panel .btn-secondary {
-    background: var(--bg);
-    color: var(--text);
-    border: 1px solid var(--border);
-  }
-
-  /* ===== 响应式 ===== */
   @media (min-width: 768px) {
-    body {
-      max-width: 480px;
-      margin: 0 auto;
-      border-left: 1px solid var(--border);
-      border-right: 1px solid var(--border);
-    }
+    body { max-width: 480px; margin: 0 auto; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
   }
 </style>
 </head>
 <body>
+
+<!-- 邀请码遮罩 -->
+<div class="invite-overlay" id="inviteOverlay">
+  <div class="invite-card">
+    <h2>📔 身心日记 · 内测</h2>
+    <p class="sub">输入邀请码开始体验</p>
+    <input type="text" id="inviteCodeInput" placeholder="请输入邀请码" maxlength="20" autocomplete="off">
+    <div class="error-msg" id="inviteError"></div>
+    <button id="inviteBtn" onclick="verifyCode()">开始使用</button>
+  </div>
+</div>
 
 <!-- 顶部栏 -->
 <div class="header">
@@ -428,8 +339,8 @@
     <div class="header-name">身心日记</div>
     <div class="header-desc">每天聊几句 · 看清自己的身体规律</div>
   </div>
-  <span class="header-badge">觉察助手</span>
-  <button class="settings-btn" onclick="toggleSettings()" title="设置">⚙️</button>
+  <span class="header-badge">内测</span>
+  <span class="header-limit" id="headerLimit" style="display:none"></span>
 </div>
 
 <!-- 每日金句 -->
@@ -442,8 +353,8 @@
 <div class="chat-area" id="chatArea">
   <div class="welcome-card" id="welcomeCard">
     <h2>📔 身心日记</h2>
-    <p>一个帮你记录和理解自己身体状态的工具。</p>
-    <p>随便聊聊你今天的感觉——脖子、肩膀、睡眠、情绪……<br>聊着聊着，你会发现自己没注意到的规律。</p>
+    <p>一个帮你记录和理解身体状态的工具。</p>
+    <p>随便聊聊今天的感受——脖子、肩膀、睡眠、情绪……<br>聊着聊着，你会发现自己没注意到的规律。</p>
     <div class="welcome-quick">
       <button onclick="sendQuick('脖子右边酸胀，下午比较明显')">🫱 脖子右边酸</button>
       <button onclick="sendQuick('最近换了枕头还是睡不好')">😴 睡不好</button>
@@ -453,88 +364,132 @@
   </div>
 </div>
 
-<!-- 打字指示器（隐藏） -->
+<!-- 打字指示器 -->
 <div class="message ai" id="typingIndicator" style="display:none">
   <div class="avatar">📔</div>
-  <div class="bubble">
-    <div class="typing-indicator">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
+  <div class="bubble"><div class="typing-indicator"><span></span><span></span><span></span></div></div>
 </div>
 
 <!-- 输入区域 -->
 <div class="input-area">
   <textarea id="messageInput" rows="1" placeholder="说说今天的身体感受…"
-            onkeydown="handleKey(event)"
-            oninput="autoResize(this)"></textarea>
+            onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
   <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>↑</button>
-</div>
-
-<!-- 设置面板 -->
-<div class="settings-overlay" id="settingsOverlay" onclick="closeSettings(event)">
-  <div class="settings-panel" onclick="event.stopPropagation()">
-    <h3>⚙️ 设置</h3>
-    <label>你的称呼（用于记录识别）</label>
-    <input type="text" id="userIdInput" placeholder="输入你的名字或昵称" maxlength="20">
-    <div class="btn-row">
-      <button class="btn-secondary" onclick="toggleSettings()">取消</button>
-      <button class="btn-primary" onclick="saveSettings()">保存</button>
-    </div>
-  </div>
 </div>
 
 <script>
 // ============================================================
-// 状态管理
+// 状态
 // ============================================================
 const STATE = {
   userId: '',
+  inviteCode: '',
+  remaining: 0,
+  limit: 100,
   isLoading: false,
 };
 
+// ============================================================
 // 初始化
+// ============================================================
 function init() {
-  STATE.userId = localStorage.getItem('cervical_user_id') || '';
-  if (STATE.userId) {
-    document.getElementById('userIdInput').value = STATE.userId;
-    document.getElementById('welcomeCard').style.display = 'none';
-  } else {
-    // 首次使用，自动弹出设置
-    setTimeout(toggleSettings, 500);
+  const saved = localStorage.getItem('shenxin_user');
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      STATE.userId = parsed.userId || '';
+      STATE.inviteCode = parsed.inviteCode || '';
+    } catch(e) {}
   }
-  // 显示随机金句
+
+  if (STATE.userId && STATE.inviteCode) {
+    // 已通过邀请码验证
+    document.getElementById('inviteOverlay').classList.add('hidden');
+    document.getElementById('welcomeCard').style.display = 'none';
+    loadUserStatus();
+  } else {
+    // 首次使用
+    document.getElementById('welcomeCard').style.display = 'none';
+  }
+
   document.getElementById('dailyQuote').textContent = '💭 ' + randomQuote();
   document.getElementById('messageInput').focus();
 }
 
+async function loadUserStatus() {
+  try {
+    const r = await fetch(`/api/user-status/${STATE.userId}`);
+    const d = await r.json();
+    STATE.remaining = d.remaining;
+    STATE.limit = d.limit;
+    updateLimitDisplay();
+  } catch(e) {}
+}
+
+function updateLimitDisplay() {
+  const el = document.getElementById('headerLimit');
+  if (STATE.remaining <= 20) {
+    el.className = 'header-limit low';
+  } else {
+    el.className = 'header-limit';
+  }
+  el.textContent = `剩余 ${STATE.remaining}/${STATE.limit}`;
+  el.style.display = '';
+}
+
 // ============================================================
-// 设置面板
+// 邀请码验证
 // ============================================================
-function toggleSettings() {
-  const overlay = document.getElementById('settingsOverlay');
-  overlay.classList.toggle('show');
-  if (overlay.classList.contains('show')) {
-    document.getElementById('userIdInput').value = STATE.userId;
-    document.getElementById('userIdInput').focus();
+async function verifyCode() {
+  const code = document.getElementById('inviteCodeInput').value.trim();
+  if (!code) {
+    document.getElementById('inviteError').textContent = '请输入邀请码';
+    return;
+  }
+
+  // 用邀请码+时间戳生成用户ID
+  const userId = 'user_' + Date.now().toString(36);
+  const btn = document.getElementById('inviteBtn');
+  btn.disabled = true;
+  btn.textContent = '验证中...';
+
+  try {
+    const r = await fetch('/api/verify-code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code, userId }),
+    });
+    const d = await r.json();
+
+    if (d.ok) {
+      STATE.userId = userId;
+      STATE.inviteCode = code.toUpperCase().trim();
+      STATE.remaining = d.limit;
+      STATE.limit = d.limit;
+      localStorage.setItem('shenxin_user', JSON.stringify({
+        userId: STATE.userId,
+        inviteCode: STATE.inviteCode,
+      }));
+      document.getElementById('inviteOverlay').classList.add('hidden');
+      document.getElementById('welcomeCard').style.display = '';
+      updateLimitDisplay();
+      document.getElementById('messageInput').focus();
+    } else {
+      document.getElementById('inviteError').textContent = d.error || '验证失败';
+      btn.disabled = false;
+      btn.textContent = '开始使用';
+    }
+  } catch(e) {
+    document.getElementById('inviteError').textContent = '网络错误，请重试';
+    btn.disabled = false;
+    btn.textContent = '开始使用';
   }
 }
 
-function closeSettings(e) {
-  if (e.target === document.getElementById('settingsOverlay')) {
-    toggleSettings();
-  }
-}
-
-function saveSettings() {
-  const input = document.getElementById('userIdInput').value.trim();
-  if (!input) return;
-  STATE.userId = input;
-  localStorage.setItem('cervical_user_id', input);
-  document.getElementById('welcomeCard').style.display = 'none';
-  toggleSettings();
-  document.getElementById('messageInput').focus();
-}
+// 回车键验证
+document.getElementById('inviteCodeInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') verifyCode();
+});
 
 // ============================================================
 // 发送消息
@@ -544,23 +499,18 @@ async function sendMessage(text) {
   if (!msg || STATE.isLoading) return;
 
   if (!STATE.userId) {
-    toggleSettings();
-    showError('请先设置你的称呼');
+    showError('请先输入邀请码');
+    document.getElementById('inviteOverlay').classList.remove('hidden');
     return;
   }
 
   STATE.isLoading = true;
   document.getElementById('sendBtn').disabled = true;
-
-  // 隐藏欢迎卡片
   document.getElementById('welcomeCard').style.display = 'none';
 
-  // 显示用户消息
   appendMessage('user', msg);
   document.getElementById('messageInput').value = '';
   autoResize(document.getElementById('messageInput'));
-
-  // 显示打字指示器
   showTyping();
   scrollToBottom();
 
@@ -570,26 +520,38 @@ async function sendMessage(text) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: STATE.userId, message: msg }),
     });
-
     const data = await response.json();
-
     hideTyping();
 
     if (!response.ok) {
       showError(data.error || '发送失败');
-      appendMessage('ai', '抱歉，我暂时无法回复。请稍后再试一下。🙏');
+      appendMessage('ai', '抱歉，暂时无法回复。请稍后再试。');
     } else {
       appendMessage('ai', data.reply);
+      // 更新剩余次数
+      if (typeof data.remaining !== 'undefined') {
+        STATE.remaining = data.remaining;
+        STATE.limit = data.limit;
+        updateLimitDisplay();
+        // 次数用完，禁用输入
+        if (data.remaining <= 0) {
+          document.getElementById('messageInput').disabled = true;
+          document.getElementById('messageInput').placeholder = '内测次数已用完';
+          document.getElementById('sendBtn').disabled = true;
+        }
+      }
     }
   } catch (err) {
     hideTyping();
     showError('网络连接失败，请检查网络后重试');
-    appendMessage('ai', '抱歉，网络好像不太稳定。你等一下再发一次？');
+    appendMessage('ai', '抱歉，网络好像不太稳定。等一下再试？');
   }
 
   STATE.isLoading = false;
-  document.getElementById('sendBtn').disabled = false;
-  document.getElementById('messageInput').focus();
+  if (STATE.remaining > 0) {
+    document.getElementById('sendBtn').disabled = false;
+    document.getElementById('messageInput').focus();
+  }
   scrollToBottom();
 }
 
@@ -605,29 +567,16 @@ function appendMessage(role, content) {
   const chatArea = document.getElementById('chatArea');
   const div = document.createElement('div');
   div.className = `message ${role}`;
-
   const avatarEmoji = role === 'user' ? '👤' : '📔';
   const now = new Date();
   const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-
-  div.innerHTML = `
-    <div class="avatar">${avatarEmoji}</div>
-    <div>
-      <div class="bubble">${renderMessage(content)}</div>
-      <div class="time">${timeStr}</div>
-    </div>
-  `;
-
+  div.innerHTML = `<div class="avatar">${avatarEmoji}</div>
+    <div><div class="bubble">${renderMessage(content)}</div><div class="time">${timeStr}</div></div>`;
   chatArea.appendChild(div);
 }
 
-function showTyping() {
-  document.getElementById('typingIndicator').style.display = 'flex';
-}
-
-function hideTyping() {
-  document.getElementById('typingIndicator').style.display = 'none';
-}
+function showTyping() { document.getElementById('typingIndicator').style.display = 'flex'; }
+function hideTyping() { document.getElementById('typingIndicator').style.display = 'none'; }
 
 // ============================================================
 // 工具函数
@@ -642,7 +591,7 @@ function handleKey(e) {
 function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = Math.min(el.scrollHeight, 100) + 'px';
-  document.getElementById('sendBtn').disabled = !el.value.trim();
+  document.getElementById('sendBtn').disabled = !el.value.trim() && STATE.remaining > 0;
 }
 
 function scrollToBottom() {
@@ -653,18 +602,14 @@ function scrollToBottom() {
 }
 
 function renderMessage(text) {
-  // 先转义HTML
   const div = document.createElement('div');
   div.textContent = text;
   let html = div.innerHTML;
-  // 渲染 **粗体**
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  // 换行
   html = html.replace(/\n/g, '<br>');
   return html;
 }
 
-// 暖心金句库
 const QUOTES = [
   '身体是最诚实的日记本，你只需要学会阅读它。',
   '每一次不适，都是身体在跟你说话，不是跟你作对。',
@@ -680,9 +625,7 @@ const QUOTES = [
   '最好的医生是你自己对身体的了解。',
 ];
 
-function randomQuote() {
-  return QUOTES[Math.floor(Math.random() * QUOTES.length)];
-}
+function randomQuote() { return QUOTES[Math.floor(Math.random() * QUOTES.length)]; }
 
 function showError(msg) {
   const toast = document.getElementById('errorToast');
@@ -691,9 +634,6 @@ function showError(msg) {
   setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-// ============================================================
-// 启动
-// ============================================================
 init();
 </script>
 </body>
